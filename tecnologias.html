@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tecnologías - Brayan Rodríguez</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f9fafb 0%, #e5e7eb 100%);
+            color: #1f2937;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 50px;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #065f46, #34d399);
+        }
+        
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #065f46;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: #047857;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(6, 95, 70, 0.3);
+        }
+        
+        .page-title {
+            font-size: 3rem;
+            color: #065f46;
+            margin-bottom: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .page-subtitle {
+            font-size: 1.3rem;
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .tech-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .tech-card:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            border-color: #34d399;
+        }
+        
+        .tech-card img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+        
+        .tech-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        .tech-card p {
+            font-weight: 600;
+            color: #065f46;
+            font-size: 1rem;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 2.2rem;
+            color: #065f46;
+            margin-bottom: 30px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .category-card {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid #065f46;
+            transition: all 0.3s ease;
+        }
+        
+        .category-card:hover {
+            background: #f0fdf4;
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(6, 95, 70, 0.1);
+        }
+        
+        .category-title {
+            font-size: 1.5rem;
+            color: #065f46;
+            margin-bottom: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .category-desc {
+            color: #4b5563;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .tech-tag {
+            background: #065f46;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .skills-section {
+            background: linear-gradient(135deg, #065f46, #047857);
+            color: white;
+            border-radius: 20px;
+            padding: 50px;
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .skills-title {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .skill-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .skill-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+        
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .skill-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .skill-level {
+            background: rgba(255, 255, 255, 0.2);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            background: #34d399;
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+        
+        .skill-percent {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .header, .section {
+                padding: 30px 20px;
+            }
+            
+            .page-title {
+                font-size: 2.2rem;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .skills-section {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="index.html" class="back-btn">
+                ← Volver al Portafolio
+            </a>
+            
+            <h1 class="page-title">
+                💻 Tecnologías y Lenguajes
+            </h1>
+            <p class="page-subtitle">
+                Dominio de múltiples tecnologías modernas para desarrollo web completo y soluciones escalables.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">🛠️ Stack Tecnológico</h2>
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
+                    <p>HTML5</p>
+                </div>
+                <div class="tech-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
+                    <p>CSS3</p>
+                </div>
+                <div class="tech-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
+                    <p>JavaScript</p>
+                </div>
+                <div class="tech-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript">
+                    <p>TypeScript</p>
+                </div>
+                <div class="tech-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP">
+                    <p>PHP 5/7/8</p>
+                </div>
+                <div class="tech-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React">
+                    <p>React</p>
+                </div>
+                <div class="tech-card">
+                    <img src="https://cdn.worldvectorlogo.com/logos/laravel-2.svg" alt="Laravel">
+                    <p>Laravel</p>
+                </div>
+                <div class="tech-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" alt="PDF">
+                    <p>TCPDF/EZPDF</p>
+                </div>
+                <div class="tech-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
+                    <p>MySQL</p>
+                </div>
+                <div class="tech-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL">
+                    <p>PostgreSQL</p>
+                </div>
+                <div class="tech-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mariadb/mariadb-original.svg" alt="MariaDB">
+                    <p>MariaDB</p>
+                </div>
+                <div class="tech-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub">
+                    <p>GitHub</p>
+                </div>
+                <div class="tech-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg" alt="GitLab">
+                    <p>GitLab</p>
+                </div>
+                <div class="tech-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" alt="Azure">
+                    <p>Azure</p>
+                </div>
+                <div class="tech-card">
+                    <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/wix.svg" alt="Wix">
+                    <p>Wix</p>
+                </div>
+                <div class="tech-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Google Sites">
+                    <p>Google Sites</p>
+                </div>
+                <div class="tech-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cloudflare/cloudflare-original.svg" alt="Cloudflare">
+                    <p>Cloudflare</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">📱 Categorías de Especialización</h2>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <h3 class="category-title">🎨 Frontend Development</h3>
+                    <p class="category-desc">
+                        Desarrollo de interfaces modernas, responsivas y con excelente experiencia de usuario. 
+                        Enfoque en performance, accesibilidad y mejores prácticas de UX/UI.
+                    </p>
+                    <div class="tech-list">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">Responsive Design</span>
+                    </div>
+                </div>
+                
+                <div class="category-card">
+                    <h3 class="category-title">⚙️ Backend Development</h3>
+                    <p class="category-desc">
+                        Creación de APIs robustas, sistemas web escalables y arquitecturas eficientes. 
+                        Experiencia en desarrollo de lógica de negocio compleja y integración de servicios.
+                    </p>
+                    <div class="tech-list">
+                        <span class="tech-tag">PHP 5/7/8</span>
+                        <span class="tech-tag">Laravel</span>
+                        <span class="tech-tag">REST APIs</span>
+                        <span class="tech-tag">MVC Architecture</span>
+                        <span class="tech-tag">Middleware</span>
+                        <span class="tech-tag">Authentication</span>
+                    </div>
+                </div>
+                
+                <div class="category-card">
+                    <h3 class="category-title">🗄️ Database Management</h3>
+                    <p class="category-desc">
+                        Diseño, optimización y gestión eficiente de bases de datos relacionales. 
+                        Experiencia en consultas complejas, normalización y mejora de performance.
+                    </p>
+                    <div class="tech-list">
+                        <span class="tech-tag">MySQL</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">MariaDB</span>
+                        <span class="tech-tag">SQL Advanced</span>
+                        <span class="tech-tag">Database Design</span>
+                        <span class="tech-tag">Query Optimization</span>
+                    </div>
+                </div>
+                
+                <div class="category-card">
+                    <h3 class="category-title">☁️ Cloud & DevOps</h3>
+                    <p class="category-desc">
+                        Despliegue en la nube, control de versiones y gestión de infraestructura. 
+                        Implementación de CI/CD y mejores prácticas de DevOps para equipos ágiles.
+                    </p>
+                    <div class="tech-list">
+                        <span class="tech-tag">Azure</span>
+                        <span class="tech-tag">GitHub</span>
+                        <span class="tech-tag">GitLab</span>
+                        <span class="tech-tag">Cloudflare</span>
+                        <span class="tech-tag">CI/CD</span>
+                        <span class="tech-tag">Version Control</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="skills-section">
+            <h2 class="skills-title">🎯 Nivel de Competencia</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 20px; opacity: 0.9;">
+                Evaluación objetiva de mis habilidades técnicas basada en experiencia práctica y proyectos completados.
+            </p>
+            
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <span class="skill-icon">🌐</span>
+                    <div class="skill-name">PHP & Laravel</div>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="width: 90%;"></div>
+                    </div>
+                    <div class="skill-percent">90% - Avanzado</div>
+                </div>
+                
+                <div class="skill-card">
+                    <span class="skill-icon">⚛️</span>
+                    <div class="skill-name">React & TypeScript</div>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="width: 85%;"></div>
+                    </div>
+                    <div class="skill-percent">85% - Avanzado</div>
+                </div>
+                
+                <div class="skill-card">
+                    <span class="skill-icon">🗃️</span>
+                    <div class="skill-name">MySQL & PostgreSQL</div>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="width: 88%;"></div>
+                    </div>
+                    <div class="skill-percent">88% - Avanzado</div>
+                </div>
+                
+                <div class="skill-card">
+                    <span class="skill-icon">🎨</span>
+                    <div class="skill-name">HTML5 & CSS3</div>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="width: 95%;"></div>
+                    </div>
+                    <div class="skill-percent">95% - Experto</div>
+                </div>
+                
+                <div class="skill-card">
+                    <span class="skill-icon">☁️</span>
+                    <div class="skill-name">Azure & Cloud Services</div>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="width: 75%;"></div>
+                    </div>
+                    <div class="skill-percent">75% - Intermedio+</div>
+                </div>
+                
+                <div class="skill-card">
+                    <span class="skill-icon">📊</span>
+                    <div class="skill-name">TCPDF & Reporting</div>
+                    <div class="skill-level">
+                        <div class="skill-progress" style="width: 92%;"></div>
+                    </div>
+                    <div class="skill-percent">92% - Experto</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">🏆 Certificaciones y Aprendizaje</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
+                <div style="background: #f0fdf4; padding: 25px; border-radius: 15px; border-left: 4px solid #34d399;">
+                    <h3 style="color: #065f46; margin-bottom: 15px;">📚 Formación Continua</h3>
+                    <p style="color: #4b5563; line-height: 1.6;">
+                        Constante actualización en nuevas tecnologías, frameworks y mejores prácticas 
+                        de desarrollo a través de cursos online, documentación oficial y proyectos prácticos.
+                    </p>
+                </div>
+                
+                <div style="background: #f0fdf4; padding: 25px; border-radius: 15px; border-left: 4px solid #34d399;">
+                    <h3 style="color: #065f46; margin-bottom: 15px;">💼 Experiencia Práctica</h3>
+                    <p style="color: #4b5563; line-height: 1.6;">
+                        Más de 2 años de experiencia práctica en desarrollo web profesional, 
+                        trabajando con equipos multidisciplinarios y metodologías ágiles.
+                    </p>
+                </div>
+                
+                <div style="background: #f0fdf4; padding: 25px; border-radius: 15px; border-left: 4px solid #34d399;">
+                    <h3 style="color: #065f46; margin-bottom: 15px;">🎯 Especialización</h3>
+                    <p style="color: #4b5563; line-height: 1.6;">
+                        Enfoque especializado en desarrollo full-stack con Laravel/React, 
+                        generación de reportes y optimización de bases de datos.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
