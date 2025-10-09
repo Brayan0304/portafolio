@@ -12,6 +12,10 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- Librerías para generar PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
     <style>
         :root {
             --primary-color: #667eea;
@@ -262,9 +266,9 @@
         }
 
         .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
         }
 
         .project-card {
@@ -293,20 +297,7 @@
             line-height: 1.6;
         }
 
-        .project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-        }
 
-        .tech-tag {
-            background: rgba(102, 126, 234, 0.1);
-            color: var(--primary-color);
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
 
         .print-actions {
             position: fixed;
@@ -392,6 +383,80 @@
             }
         }
 
+        /* Optimizaciones específicas para generación de PDF */
+        .pdf-optimized {
+            font-size: 13px !important;
+            line-height: 1.4 !important;
+        }
+
+        .pdf-optimized .cv-header {
+            padding: 2rem 1.5rem 1.5rem !important;
+        }
+
+        .pdf-optimized .personal-info h1 {
+            font-size: 2.2rem !important;
+            margin-bottom: 0.3rem !important;
+        }
+
+        .pdf-optimized .personal-info .role {
+            font-size: 1.2rem !important;
+            margin-bottom: 0.8rem !important;
+        }
+
+        .pdf-optimized .personal-info .summary {
+            font-size: 0.95rem !important;
+            line-height: 1.5 !important;
+        }
+
+        .pdf-optimized .contact-item {
+            margin-bottom: 0.6rem !important;
+            font-size: 0.9rem !important;
+        }
+
+        .pdf-optimized .cv-section {
+            padding: 1.2rem 1.5rem !important;
+        }
+
+        .pdf-optimized .section-title {
+            font-size: 1.3rem !important;
+            margin-bottom: 1.2rem !important;
+        }
+
+        .pdf-optimized .experience-item,
+        .pdf-optimized .education-item {
+            margin-bottom: 1.2rem !important;
+        }
+
+        .pdf-optimized .item-title {
+            font-size: 1.1rem !important;
+        }
+
+        .pdf-optimized .item-company {
+            font-size: 1rem !important;
+        }
+
+        .pdf-optimized .achievements li {
+            margin-bottom: 0.4rem !important;
+            font-size: 0.9rem !important;
+        }
+
+        .pdf-optimized .skill-category {
+            padding: 1rem !important;
+        }
+
+        .pdf-optimized .project-card {
+            padding: 1rem !important;
+            margin-bottom: 1rem !important;
+        }
+
+        .pdf-optimized .project-title {
+            font-size: 1rem !important;
+        }
+
+        .pdf-optimized .project-description {
+            font-size: 0.9rem !important;
+        }
+
         /* Print Styles */
         @media print {
             .print-actions {
@@ -419,7 +484,11 @@
 </head>
 <body>
     <div class="print-actions">
-        <button class="print-btn" onclick="window.print()">
+        <button class="print-btn" onclick="downloadPDF()">
+            <i class="fas fa-download"></i>
+            Descargar PDF
+        </button>
+        <button class="print-btn" onclick="printCV()">
             <i class="fas fa-print"></i>
             Imprimir CV
         </button>
@@ -585,46 +654,39 @@
                 
                 <div class="projects-grid">
                     <div class="project-card">
-                        <div class="project-title">SGA Gestión</div>
+                        <div class="project-title">SGA Gestión - Sistema de Gestión Administrativa</div>
                         <div class="project-description">
-                            Sistema completo de gestión de empleados y documentación empresarial con arquitectura 
-                            separada (Frontend React + Backend Laravel). Permite crear y generar reportes 
-                            personalizados desplegado en Azure.
-                        </div>
-                        <div class="project-tech">
-                            <span class="tech-tag">Laravel</span>
-                            <span class="tech-tag">PHP</span>
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">TypeScript</span>
-                            <span class="tech-tag">PostgreSQL</span>
-                            <span class="tech-tag">Azure</span>
+                            Desarrollé un sistema completo de gestión de empleados y documentación empresarial 
+                            utilizando arquitectura separada con frontend en React con TypeScript y backend en 
+                            Laravel con PHP. El sistema permite crear y generar reportes personalizados según 
+                            las necesidades específicas de cada empresa. Implementé una base de datos PostgreSQL 
+                            optimizada y desplegué la solución completa en la plataforma Azure Cloud, garantizando 
+                            escalabilidad y rendimiento óptimo para el manejo de grandes volúmenes de información empresarial.
                         </div>
                     </div>
                     
                     <div class="project-card">
-                        <div class="project-title">Sistema de Reportes - Castilla Costerm</div>
+                        <div class="project-title">Sistema de Reportes Empresariales - Castilla Costerm</div>
                         <div class="project-description">
-                            Sistema de generación automatizada de reportes empresariales utilizando controladores 
-                            PHP y TCPDF para crear documentos PDF personalizados y templates dinámicos.
-                        </div>
-                        <div class="project-tech">
-                            <span class="tech-tag">PHP</span>
-                            <span class="tech-tag">TCPDF</span>
-                            <span class="tech-tag">MySQL</span>
+                            Diseñé y desarrollé un sistema especializado para la generación automatizada de reportes 
+                            empresariales, implementando controladores PHP robustos integrados con la librería TCPDF 
+                            para crear documentos PDF personalizados con templates dinámicos. El sistema incluye 
+                            optimización de consultas de base de datos MySQL, automatización completa de procesos 
+                            de generación de documentación y una interfaz intuitiva que permite a los usuarios 
+                            crear reportes customizados según los requerimientos específicos de cada departamento.
                         </div>
                     </div>
                     
                     <div class="project-card">
-                        <div class="project-title">Sitios Web Educativos</div>
+                        <div class="project-title">Plataformas Web para Instituciones Educativas</div>
                         <div class="project-description">
-                            Desarrollo de páginas web institucionales para centros educativos con integración 
-                            de Cloudflare, correos institucionales y optimización SEO completa.
-                        </div>
-                        <div class="project-tech">
-                            <span class="tech-tag">Google Sites</span>
-                            <span class="tech-tag">Wix</span>
-                            <span class="tech-tag">Cloudflare</span>
-                            <span class="tech-tag">Google Workspace</span>
+                            Desarrollé más de 10 sitios web institucionales para centros educativos utilizando 
+                            plataformas como Google Sites y Wix, implementando soluciones completas que incluyen 
+                            configuración avanzada de DNS, integración con servicios de Cloudflare para optimización 
+                            de rendimiento y seguridad, configuración de correos institucionales mediante Google 
+                            Workspace, y optimización SEO completa. Además, proporcioné capacitación y soporte 
+                            técnico continuo al personal administrativo, garantizando la autonomía en la 
+                            gestión de contenidos y mantenimiento básico de las plataformas.
                         </div>
                     </div>
                 </div>
@@ -637,50 +699,38 @@
                 <div class="education-item">
                     <div class="item-header">
                         <div>
-                            <div class="item-title">Desarrollo Web Full Stack</div>
-                            <div class="item-company">Autodidacta & Cursos Online</div>
-                            <div class="item-location">Plataformas Digitales</div>
+                            <div class="item-title">Ingeniería de Sistemas</div>
+                            <div class="item-company">Fundación Universitaria Compensar</div>
                         </div>
-                        <div class="item-period">2024 - Presente</div>
+                        <div class="item-period">2022 - Presente</div>
                     </div>
-                    <div class="item-description">
-                        Formación continua en tecnologías web modernas, frameworks y mejores prácticas de desarrollo.
-                    </div>
-                    <ul class="achievements">
-                        <li>Especialización en PHP, Laravel y desarrollo backend</li>
-                        <li>Formación en React, TypeScript y desarrollo frontend</li>
-                        <li>Cursos de bases de datos MySQL, PostgreSQL y MariaDB</li>
-                        <li>Formación en servicios cloud de Azure</li>
-                        <li>Aprendizaje en optimización web y mejores prácticas</li>
-                    </ul>
                 </div>
-            </section>
 
-            <!-- Información Adicional -->
-            <section class="cv-section">
-                <h2 class="section-title">Información Adicional</h2>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
-                    <div>
-                        <h3 style="font-size: 1.1rem; font-weight: 600; color: var(--text-color); margin-bottom: 1rem;">
-                            <i class="fas fa-language" style="margin-right: 0.5rem; color: var(--primary-color);"></i>
-                            Idiomas
-                        </h3>
-                        <ul class="achievements">
-                            <li>Español - Nativo</li>
-                        </ul>
+                <div class="education-item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-title">Mantenimiento y Reparación de Dispositivos Móviles</div>
+                        </div>
+                        <div class="item-period">2023</div>
                     </div>
-                    
-                    <div>
-                        <h3 style="font-size: 1.1rem; font-weight: 600; color: var(--text-color); margin-bottom: 1rem;">
-                            <i class="fas fa-trophy" style="margin-right: 0.5rem; color: var(--primary-color);"></i>
-                            Logros Destacados
-                        </h3>
-                        <ul class="achievements">
-                            <li>+2 años de experiencia en desarrollo web</li>
-                            <li>+15 proyectos web completados exitosamente</li>
-                            <li>+10 instituciones educativas atendidas</li>
-                        </ul>
+                </div>
+
+                <div class="education-item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-title">Asistencia Administrativa</div>
+                            <div class="item-company">SENA</div>
+                        </div>
+                        <div class="item-period">2020 - 2021</div>
+                    </div>
+                </div>
+
+                <div class="education-item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-title">Mantenimiento y Reparación de Computadores y Portátiles</div>
+                        </div>
+                        <div class="item-period">2019</div>
                     </div>
                 </div>
             </section>
@@ -688,6 +738,205 @@
     </div>
 
     <script>
+        // Funcionalidad para descargar PDF
+        async function downloadPDF() {
+            try {
+                // Mostrar loading
+                const downloadBtn = event.target.closest('button');
+                const originalHTML = downloadBtn.innerHTML;
+                downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generando PDF carta...';
+                downloadBtn.disabled = true;
+                
+                // Ocultar temporalmente los botones de acción para el PDF
+                const printActions = document.querySelector('.print-actions');
+                printActions.style.display = 'none';
+                
+                // Aplicar estilos optimizados para PDF
+                const cvContainer = document.querySelector('.cv-container');
+                cvContainer.classList.add('pdf-optimized');
+                cvContainer.style.maxWidth = '750px';
+                
+                // Configurar opciones optimizadas para html2canvas
+                const canvas = await html2canvas(cvContainer, {
+                    scale: 1.2, // Escala optimizada
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: '#ffffff',
+                    width: 800,
+                    windowWidth: 1000,
+                    scrollX: 0,
+                    scrollY: 0,
+                    logging: false,
+                    removeContainer: false
+                });
+                
+                // Restaurar estilos originales
+                cvContainer.classList.remove('pdf-optimized');
+                cvContainer.style.maxWidth = '';
+                printActions.style.display = 'flex';
+                
+                // Configurar PDF en tamaño carta
+                const { jsPDF } = window.jspdf;
+                const imgData = canvas.toDataURL('image/png', 0.9);
+                
+                // Dimensiones tamaño carta (Letter) en mm: 215.9 x 279.4
+                const pdfWidth = 215.9;
+                const pdfHeight = 279.4;
+                
+                // Márgenes
+                const margin = 8;
+                const contentWidth = pdfWidth - (margin * 2);
+                const contentHeight = pdfHeight - (margin * 2);
+                
+                // Calcular dimensiones manteniendo proporción
+                const imgWidth = contentWidth;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'letter'
+                });
+                
+                if (imgHeight <= contentHeight) {
+                    // Todo cabe en una página
+                    pdf.addImage(imgData, 'PNG', margin, margin, imgWidth, imgHeight);
+                } else {
+                    // Múltiples páginas - división inteligente
+                    const totalPages = Math.ceil(imgHeight / contentHeight);
+                    
+                    for (let i = 0; i < totalPages; i++) {
+                        if (i > 0) {
+                            pdf.addPage();
+                        }
+                        
+                        // Calcular la porción de imagen para esta página
+                        const sourceY = (i * contentHeight * canvas.height) / imgHeight;
+                        const sourceHeight = Math.min(
+                            (contentHeight * canvas.height) / imgHeight,
+                            canvas.height - sourceY
+                        );
+                        
+                        // Crear canvas temporal para esta porción
+                        const tempCanvas = document.createElement('canvas');
+                        const tempCtx = tempCanvas.getContext('2d');
+                        tempCanvas.width = canvas.width;
+                        tempCanvas.height = sourceHeight;
+                        
+                        // Copiar la porción correspondiente
+                        tempCtx.drawImage(
+                            canvas,
+                            0, sourceY, canvas.width, sourceHeight,
+                            0, 0, canvas.width, sourceHeight
+                        );
+                        
+                        const tempImgData = tempCanvas.toDataURL('image/png', 0.9);
+                        const tempImgHeight = (sourceHeight * imgWidth) / canvas.width;
+                        
+                        pdf.addImage(tempImgData, 'PNG', margin, margin, imgWidth, tempImgHeight);
+                    }
+                }
+                
+                // Descargar el PDF con nombre descriptivo
+                const today = new Date();
+                const dateStr = today.toISOString().split('T')[0];
+                pdf.save(`CV_Brayan_Rodriguez_${dateStr}.pdf`);
+                
+                // Restaurar botón
+                downloadBtn.innerHTML = originalHTML;
+                downloadBtn.disabled = false;
+                
+                // Mostrar mensaje de éxito
+                showNotification('¡CV descargado exitosamente en tamaño carta!', 'success');
+                
+            } catch (error) {
+                console.error('Error al generar PDF:', error);
+                
+                // Restaurar elementos en caso de error
+                const downloadBtn = document.querySelector('button[onclick="downloadPDF()"]');
+                if (downloadBtn) {
+                    downloadBtn.innerHTML = '<i class="fas fa-download"></i> Descargar PDF';
+                    downloadBtn.disabled = false;
+                }
+                
+                document.querySelector('.print-actions').style.display = 'flex';
+                
+                showNotification('Error al generar el PDF. Verifica tu conexión e intenta nuevamente.', 'error');
+            }
+        }
+        
+        // Función para mostrar notificaciones
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <span>${message}</span>
+                <button class="notification-close">×</button>
+            `;
+            
+            // Estilos para notificación
+            Object.assign(notification.style, {
+                position: 'fixed',
+                top: '20px',
+                right: '20px',
+                padding: '16px 20px',
+                borderRadius: '8px',
+                color: 'white',
+                fontWeight: '500',
+                zIndex: '10000',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                minWidth: '300px',
+                boxShadow: '0 10px 25px rgba(0, 0, 0, 0.2)',
+                transform: 'translateX(400px)',
+                transition: 'transform 0.3s ease',
+                fontFamily: 'Inter, sans-serif'
+            });
+            
+            // Colores según tipo
+            const colors = {
+                success: '#10b981',
+                error: '#ef4444',
+                warning: '#f59e0b',
+                info: '#3b82f6'
+            };
+            notification.style.background = colors[type] || colors.info;
+            
+            document.body.appendChild(notification);
+            
+            // Animar entrada
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Botón cerrar
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.style.cssText = `
+                background: none;
+                border: none;
+                color: white;
+                font-size: 20px;
+                cursor: pointer;
+                padding: 0;
+                margin-left: auto;
+            `;
+            
+            function closeNotification() {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }
+            
+            closeBtn.addEventListener('click', closeNotification);
+            
+            // Auto cerrar después de 5 segundos
+            setTimeout(closeNotification, 5000);
+        }
+        
         // Funcionalidad adicional para mejorar la experiencia
         document.addEventListener('DOMContentLoaded', function() {
             // Smooth scroll para navegación interna si es necesario
@@ -718,9 +967,9 @@
         });
         
         // Función para imprimir optimizada
-        window.print = function() {
+        function printCV() {
             window.print();
-        };
+        }
     </script>
 </body>
 </html>
