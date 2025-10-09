@@ -136,6 +136,9 @@ Este portafolio está configurado para desplegarse automáticamente en GitHub Pa
 - **Plataforma**: Azure Cloud
 - **Funcionalidades**: Gestión de empleados, documentación, reportes personalizados
 - **Estado**: Producción activa
+- **Repositorios**: 
+  - [Frontend (React + TypeScript)](https://github.com/Brayan0304/sgaFrontend)
+  - [Backend (Laravel + PHP)](https://github.com/Brayan0304/sgalaravel)
 
 ### 📄 Sistema de Reportes - Castilla Costerm
 **Generación Automatizada de Documentos**
