@@ -319,23 +319,45 @@
         /* Estilos para impresión */
         @media print {
             body {
-                background: white;
-                padding: 0;
+                background: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
             }
             
             .print-actions {
-                display: none;
+                display: none !important;
             }
             
             .cv-container {
-                box-shadow: none;
-                max-width: none;
-                margin: 0;
+                box-shadow: none !important;
+                max-width: none !important;
+                margin: 0 !important;
+                border-radius: 0 !important;
+                grid-template-columns: 350px 1fr !important;
+                min-height: 100vh;
+            }
+            
+            .left-panel, .right-panel {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            
+            .main-section {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                margin-bottom: 20px;
+            }
+            
+            .item {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                margin-bottom: 15px;
             }
         }
 
         .pdf-optimized {
             box-shadow: none !important;
+            border-radius: 0 !important;
         }
     </style>
 </head>
@@ -372,6 +394,25 @@
                 <div class="contact-item">
                     <i class="fas fa-globe"></i>
                     <a href="https://brayan0304.github.io/portafolio" target="_blank">Portafolio</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Colombia</span>
+                </div>
+            </div>
+
+            <!-- Logros y Estadísticas -->
+            <div class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-trophy"></i>
+                    Logros Destacados
+                </h2>
+                <div style="color: #bdc3c7; font-size: 14px; line-height: 1.8;">
+                    <div style="margin-bottom: 8px;">✅ +2 años de experiencia</div>
+                    <div style="margin-bottom: 8px;">✅ +15 proyectos completados</div>
+                    <div style="margin-bottom: 8px;">✅ +10 instituciones educativas</div>
+                    <div style="margin-bottom: 8px;">✅ Sistemas empresariales en producción</div>
+                    <div style="margin-bottom: 8px;">✅ Reportes PDF optimizados</div>
                 </div>
             </div>
 
@@ -419,11 +460,13 @@
                     Sobre Mí
                 </h2>
                 <p class="about-text">
-                    Desarrollador web full stack apasionado con sólida experiencia en tecnologías modernas como PHP, Laravel, React y TypeScript. 
-                    Especializado en la creación de soluciones web innovadoras, desarrollo de sistemas de gestión y generación de reportes avanzados. 
-                    Comprometido con la excelencia técnica y la entrega de productos de alta calidad.
+                    Desarrollador web full stack con +2 años de experiencia en PHP, Laravel, React y TypeScript. 
+                    Especializado en desarrollo de sistemas de gestión, generación de reportes y sitios web educativos. 
+                    Comprometido con la entrega de soluciones de alta calidad.
                 </p>
             </div>
+
+
 
             <!-- Experiencia -->
             <div class="main-section">
@@ -440,7 +483,7 @@
                     </div>
                     <div class="item-description">
                         Desarrollo y mantenimiento de aplicaciones web utilizando JavaScript, PHP, HTML y CSS. 
-                        Especialización en la optimización de reportes PHP con librería TCPDF.
+                        Especialización en optimización de reportes PHP con librería TCPDF.
                     </div>
                 </div>
 
@@ -563,7 +606,7 @@
     </div>
 
     <script>
-        // Funcionalidad para descargar PDF
+        // Funcionalidad para descargar PDF optimizada
         async function downloadPDF() {
             try {
                 const downloadBtn = event.target.closest('button');
@@ -579,36 +622,57 @@
                 const cvContainer = document.getElementById('cv-content');
                 cvContainer.classList.add('pdf-optimized');
                 
-                // Generar canvas
+                // Esperar renderizado
+                await new Promise(resolve => setTimeout(resolve, 300));
+                
+                // Generar canvas optimizado
                 const canvas = await html2canvas(cvContainer, {
-                    scale: 1.5,
+                    scale: 1.8,
                     useCORS: true,
                     allowTaint: true,
                     backgroundColor: '#ffffff',
-                    width: 900,
+                    logging: false,
                     windowWidth: 1200,
-                    scrollX: 0,
-                    scrollY: 0,
-                    logging: false
+                    windowHeight: window.innerHeight
                 });
                 
                 // Crear PDF
                 const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF({
-                    orientation: 'portrait',
-                    unit: 'mm',
-                    format: 'a4'
-                });
+                const pdf = new jsPDF('portrait', 'mm', 'a4');
                 
-                const imgWidth = 210;
+                const pageWidth = 210;
+                const pageHeight = 297;
+                const imgWidth = pageWidth - 20; // Margen
                 const imgHeight = (canvas.height * imgWidth) / canvas.width;
                 
-                pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, imgWidth, imgHeight);
+                if (imgHeight > pageHeight - 20) {
+                    // Múltiples páginas
+                    const totalPages = Math.ceil(imgHeight / (pageHeight - 20));
+                    const sectionHeight = canvas.height / totalPages;
+                    
+                    for (let i = 0; i < totalPages; i++) {
+                        if (i > 0) pdf.addPage();
+                        
+                        const tempCanvas = document.createElement('canvas');
+                        tempCanvas.width = canvas.width;
+                        tempCanvas.height = sectionHeight;
+                        const tempCtx = tempCanvas.getContext('2d');
+                        
+                        tempCtx.drawImage(canvas, 0, i * sectionHeight, canvas.width, sectionHeight, 0, 0, canvas.width, sectionHeight);
+                        
+                        const sectionImgHeight = (sectionHeight * imgWidth) / canvas.width;
+                        pdf.addImage(tempCanvas.toDataURL('image/jpeg', 0.95), 'JPEG', 10, 10, imgWidth, sectionImgHeight);
+                    }
+                } else {
+                    // Una página
+                    pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 10, 10, imgWidth, imgHeight);
+                }
+                
                 pdf.save('CV_Brayan_Rodriguez.pdf');
                 
             } catch (error) {
                 console.error('Error generando PDF:', error);
-                alert('Error al generar el PDF. Por favor, intenta de nuevo.');
+                alert('Error al generar el PDF. Intenta de nuevo.');
             } finally {
                 // Restaurar elementos
                 document.querySelector('.print-actions').style.display = 'block';
