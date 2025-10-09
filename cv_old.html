@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - Brayan | Desarrollador Web Full Stack</title>
+    <meta name="description" content="Curriculum Vitae de Brayan - Desarrollador Web Full Stack especializado en PHP, Laravel, React y TypeScript">
+    
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Librerías para generar PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --text-color: #2d3748;
+            --text-secondary: #718096;
+            --bg-color: #ffffff;
+            --border-color: #e2e8f0;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--bg-color);
+            padding: 0;
+            margin: 0;
+        }
+
+        .cv-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .cv-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 3rem 2rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cv-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(50%, -50%);
+        }
+
+        .header-content {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 2rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .personal-info h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+
+        .personal-info .role {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .personal-info .summary {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+
+        .contact-info {
+            text-align: right;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .contact-item i {
+            width: 20px;
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        .cv-body {
+            padding: 0;
+        }
+
+        .cv-section {
+            padding: 2.5rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cv-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .experience-item,
+        .education-item {
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .experience-item:last-child,
+        .education-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .item-header {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 1rem;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .item-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.3rem;
+        }
+
+        .item-company {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .item-location {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .item-period {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            white-space: nowrap;
+            align-self: start;
+        }
+
+        .item-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .achievements {
+            list-style: none;
+        }
+
+        .achievements li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .achievements li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .skill-category h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .skill-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .projects-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+
+
+        .print-actions {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .print-btn {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .print-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .cv-container {
+                margin: 0;
+                box-shadow: none;
+            }
+
+            .cv-header {
+                padding: 2rem 1rem;
+            }
+
+            .header-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .contact-info {
+                text-align: center;
+            }
+
+            .contact-item {
+                justify-content: center;
+            }
+
+            .personal-info h1 {
+                font-size: 2.5rem;
+            }
+
+            .cv-section {
+                padding: 2rem 1rem;
+            }
+
+            .item-header {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .item-period {
+                align-self: start;
+                justify-self: start;
+            }
+
+            .print-actions {
+                position: relative;
+                top: auto;
+                right: auto;
+                justify-content: center;
+                padding: 1rem;
+                background: #f8f9fa;
+                margin: 0;
+            }
+        }
+
+        /* Optimizaciones específicas para generación de PDF */
+        .pdf-optimized {
+            font-size: 13px !important;
+            line-height: 1.4 !important;
+        }
+
+        .pdf-optimized .cv-header {
+            padding: 2rem 1.5rem 1.5rem !important;
+        }
+
+        .pdf-optimized .personal-info h1 {
+            font-size: 2.2rem !important;
+            margin-bottom: 0.3rem !important;
+        }
+
+        .pdf-optimized .personal-info .role {
+            font-size: 1.2rem !important;
+            margin-bottom: 0.8rem !important;
+        }
+
+        .pdf-optimized .personal-info .summary {
+            font-size: 0.95rem !important;
+            line-height: 1.5 !important;
+        }
+
+        .pdf-optimized .contact-item {
+            margin-bottom: 0.6rem !important;
+            font-size: 0.9rem !important;
+        }
+
+        .pdf-optimized .cv-section {
+            padding: 1.2rem 1.5rem !important;
+        }
+
+        .pdf-optimized .section-title {
+            font-size: 1.3rem !important;
+            margin-bottom: 1.2rem !important;
+        }
+
+        .pdf-optimized .experience-item,
+        .pdf-optimized .education-item {
+            margin-bottom: 1.2rem !important;
+        }
+
+        .pdf-optimized .item-title {
+            font-size: 1.1rem !important;
+        }
+
+        .pdf-optimized .item-company {
+            font-size: 1rem !important;
+        }
+
+        .pdf-optimized .achievements li {
+            margin-bottom: 0.4rem !important;
+            font-size: 0.9rem !important;
+        }
+
+        .pdf-optimized .skill-category {
+            padding: 1rem !important;
+        }
+
+        .pdf-optimized .project-card {
+            padding: 1rem !important;
+            margin-bottom: 1rem !important;
+        }
+
+        .pdf-optimized .project-title {
+            font-size: 1rem !important;
+        }
+
+        .pdf-optimized .project-description {
+            font-size: 0.9rem !important;
+        }
+
+        /* Print Styles */
+        @media print {
+            .print-actions {
+                display: none;
+            }
+
+            .cv-container {
+                box-shadow: none;
+                max-width: none;
+            }
+
+            .cv-section {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            .experience-item,
+            .education-item,
+            .project-card {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="print-actions">
+        <button class="print-btn" onclick="downloadPDF()">
+            <i class="fas fa-download"></i>
+            Descargar PDF
+        </button>
+        <button class="print-btn" onclick="printCV()">
+            <i class="fas fa-print"></i>
+            Imprimir CV
+        </button>
+        <a href="index.html" class="print-btn">
+            <i class="fas fa-arrow-left"></i>
+            Volver al Portafolio
+        </a>
+    </div>
+
+    <div class="cv-container">
+        <!-- Header -->
+        <header class="cv-header">
+            <div class="header-content">
+                <div class="personal-info">
+                    <h1>Brayan Rodriguez</h1>
+                    <div class="role">Desarrollador Web Full Stack</div>
+                    <div class="summary">
+                        Desarrollador web especializado en PHP, Laravel, React y TypeScript con más de 2 años de experiencia 
+                        creando soluciones digitales innovadoras y eficientes para empresas.
+                    </div>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>riverosb34@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-linkedin"></i>
+                        <span>linkedin.com/in/brayan-steven-rodriguez-02899120a</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-github"></i>
+                        <span>github.com/Brayan0304</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-globe"></i>
+                        <span>brayan0304.github.io/portafolio</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="cv-body">
+            <!-- Experiencia Profesional -->
+            <section class="cv-section">
+                <h2 class="section-title">Experiencia Profesional</h2>
+                
+                <div class="experience-item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-title">Desarrollador Web Full Stack</div>
+                            <div class="item-company">Pegasus Software</div>
+                            <div class="item-location">Colombia</div>
+                        </div>
+                        <div class="item-period">2024 - Presente</div>
+                    </div>
+                    <div class="item-description">
+                        Desarrollo y mantenimiento de aplicaciones web utilizando JavaScript, PHP, HTML y CSS. 
+                        Especialización en la optimización de reportes PHP con librería TCPDF.
+                    </div>
+                    <ul class="achievements">
+                        <li>Optimización del rendimiento de reportes PHP</li>
+                        <li>Desarrollo de interfaces dinámicas con JavaScript</li>
+                        <li>Implementación de mejores prácticas de código</li>
+                        <li>Colaboración en proyectos de gran escala</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-title">Desarrollador de Sitios Web Educativos</div>
+                            <div class="item-company">Freelance</div>
+                            <div class="item-location">Colombia</div>
+                        </div>
+                        <div class="item-period">2024 - Presente</div>
+                    </div>
+                    <div class="item-description">
+                        Desarrollo de páginas web para instituciones educativas utilizando Google Sites y Wix, 
+                        con configuración de servicios de Cloudflare y correos institucionales.
+                    </div>
+                    <ul class="achievements">
+                        <li>Creación de más de 10 sitios web educativos</li>
+                        <li>Configuración de DNS y servicios de Cloudflare</li>
+                        <li>Implementación de correos institucionales con Google Workspace</li>
+                        <li>Capacitación a personal administrativo</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-title">Desarrollador de Reportes</div>
+                            <div class="item-company">Castilla Costerm</div>
+                            <div class="item-location">Colombia</div>
+                        </div>
+                        <div class="item-period">Presente</div>
+                    </div>
+                    <div class="item-description">
+                        Desarrollo especializado en la generación de reportes del sistema utilizando 
+                        controladores PHP y la librería TCPDF para documentos PDF.
+                    </div>
+                    <ul class="achievements">
+                        <li>Desarrollo de sistema completo de reportes</li>
+                        <li>Implementación de templates PDF personalizados</li>
+                        <li>Optimización de consultas de base de datos</li>
+                        <li>Automatización de procesos de generación</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Habilidades Técnicas -->
+            <section class="cv-section">
+                <h2 class="section-title">Habilidades Técnicas</h2>
+                
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3>Frontend</h3>
+                        <div class="skill-items">
+                            <span class="skill-tag">HTML5</span>
+                            <span class="skill-tag">CSS3</span>
+                            <span class="skill-tag">JavaScript ES6+</span>
+                            <span class="skill-tag">TypeScript</span>
+                            <span class="skill-tag">React</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Backend</h3>
+                        <div class="skill-items">
+                            <span class="skill-tag">PHP 5.7/8</span>
+                            <span class="skill-tag">Laravel</span>
+                            <span class="skill-tag">TCPDF</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Base de Datos</h3>
+                        <div class="skill-items">
+                            <span class="skill-tag">MySQL</span>
+                            <span class="skill-tag">PostgreSQL</span>
+                            <span class="skill-tag">MariaDB</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <h3>Herramientas & Plataformas</h3>
+                        <div class="skill-items">
+                            <span class="skill-tag">Azure</span>
+                            <span class="skill-tag">GitHub/GitLab</span>
+                            <span class="skill-tag">Cloudflare</span>
+                            <span class="skill-tag">Google Workspace</span>
+                            <span class="skill-tag">Wix</span>
+                            <span class="skill-tag">Google Sites</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Proyectos Destacados -->
+            <section class="cv-section">
+                <h2 class="section-title">Proyectos Destacados</h2>
+                
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-title">SGA Gestión - Sistema de Gestión Administrativa</div>
+                        <div class="project-description">
+                            Desarrollé un sistema completo de gestión de empleados y documentación empresarial 
+                            utilizando arquitectura separada con frontend en React con TypeScript y backend en 
+                            Laravel con PHP. El sistema permite crear y generar reportes personalizados según 
+                            las necesidades específicas de cada empresa. Implementé una base de datos PostgreSQL 
+                            optimizada y desplegué la solución completa en la plataforma Azure Cloud, garantizando 
+                            escalabilidad y rendimiento óptimo para el manejo de grandes volúmenes de información empresarial.
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-title">Sistema de Reportes Empresariales - Castilla Costerm</div>
+                        <div class="project-description">
+                            Diseñé y desarrollé un sistema especializado para la generación automatizada de reportes 
+                            empresariales, implementando controladores PHP robustos integrados con la librería TCPDF 
+                            para crear documentos PDF personalizados con templates dinámicos. El sistema incluye 
+                            optimización de consultas de base de datos MySQL, automatización completa de procesos 
+                            de generación de documentación y una interfaz intuitiva que permite a los usuarios 
+                            crear reportes customizados según los requerimientos específicos de cada departamento.
+                        </div>
+                    </div>
+                    
+                    <div class="project-card">
+                        <div class="project-title">Plataformas Web para Instituciones Educativas</div>
+                        <div class="project-description">
+                            Desarrollé más de 10 sitios web institucionales para centros educativos utilizando 
+                            plataformas como Google Sites y Wix, implementando soluciones completas que incluyen 
+                            configuración avanzada de DNS, integración con servicios de Cloudflare para optimización 
+                            de rendimiento y seguridad, configuración de correos institucionales mediante Google 
+                            Workspace, y optimización SEO completa. Además, proporcioné capacitación y soporte 
+                            técnico continuo al personal administrativo, garantizando la autonomía en la 
+                            gestión de contenidos y mantenimiento básico de las plataformas.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Educación -->
+            <section class="cv-section">
+                <h2 class="section-title">Educación y Certificaciones</h2>
+                
+                <div class="education-item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-title">Ingeniería de Sistemas</div>
+                            <div class="item-company">Fundación Universitaria Compensar</div>
+                        </div>
+                        <div class="item-period">2022 - Presente</div>
+                    </div>
+                </div>
+
+                <div class="education-item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-title">Mantenimiento y Reparación de Dispositivos Móviles</div>
+                        </div>
+                        <div class="item-period">2023</div>
+                    </div>
+                </div>
+
+                <div class="education-item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-title">Asistencia Administrativa</div>
+                            <div class="item-company">SENA</div>
+                        </div>
+                        <div class="item-period">2020 - 2021</div>
+                    </div>
+                </div>
+
+                <div class="education-item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-title">Mantenimiento y Reparación de Computadores y Portátiles</div>
+                        </div>
+                        <div class="item-period">2019</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Funcionalidad para descargar PDF
+        async function downloadPDF() {
+            try {
+                // Mostrar loading
+                const downloadBtn = event.target.closest('button');
+                const originalHTML = downloadBtn.innerHTML;
+                downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generando PDF carta...';
+                downloadBtn.disabled = true;
+                
+                // Ocultar temporalmente los botones de acción para el PDF
+                const printActions = document.querySelector('.print-actions');
+                printActions.style.display = 'none';
+                
+                // Aplicar estilos optimizados para PDF
+                const cvContainer = document.querySelector('.cv-container');
+                cvContainer.classList.add('pdf-optimized');
+                cvContainer.style.maxWidth = '750px';
+                
+                // Configurar opciones optimizadas para html2canvas
+                const canvas = await html2canvas(cvContainer, {
+                    scale: 1.2, // Escala optimizada
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: '#ffffff',
+                    width: 800,
+                    windowWidth: 1000,
+                    scrollX: 0,
+                    scrollY: 0,
+                    logging: false,
+                    removeContainer: false
+                });
+                
+                // Restaurar estilos originales
+                cvContainer.classList.remove('pdf-optimized');
+                cvContainer.style.maxWidth = '';
+                printActions.style.display = 'flex';
+                
+                // Configurar PDF en tamaño carta
+                const { jsPDF } = window.jspdf;
+                const imgData = canvas.toDataURL('image/png', 0.9);
+                
+                // Dimensiones tamaño carta (Letter) en mm: 215.9 x 279.4
+                const pdfWidth = 215.9;
+                const pdfHeight = 279.4;
+                
+                // Márgenes
+                const margin = 8;
+                const contentWidth = pdfWidth - (margin * 2);
+                const contentHeight = pdfHeight - (margin * 2);
+                
+                // Calcular dimensiones manteniendo proporción
+                const imgWidth = contentWidth;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'letter'
+                });
+                
+                if (imgHeight <= contentHeight) {
+                    // Todo cabe en una página
+                    pdf.addImage(imgData, 'PNG', margin, margin, imgWidth, imgHeight);
+                } else {
+                    // Múltiples páginas - división inteligente
+                    const totalPages = Math.ceil(imgHeight / contentHeight);
+                    
+                    for (let i = 0; i < totalPages; i++) {
+                        if (i > 0) {
+                            pdf.addPage();
+                        }
+                        
+                        // Calcular la porción de imagen para esta página
+                        const sourceY = (i * contentHeight * canvas.height) / imgHeight;
+                        const sourceHeight = Math.min(
+                            (contentHeight * canvas.height) / imgHeight,
+                            canvas.height - sourceY
+                        );
+                        
+                        // Crear canvas temporal para esta porción
+                        const tempCanvas = document.createElement('canvas');
+                        const tempCtx = tempCanvas.getContext('2d');
+                        tempCanvas.width = canvas.width;
+                        tempCanvas.height = sourceHeight;
+                        
+                        // Copiar la porción correspondiente
+                        tempCtx.drawImage(
+                            canvas,
+                            0, sourceY, canvas.width, sourceHeight,
+                            0, 0, canvas.width, sourceHeight
+                        );
+                        
+                        const tempImgData = tempCanvas.toDataURL('image/png', 0.9);
+                        const tempImgHeight = (sourceHeight * imgWidth) / canvas.width;
+                        
+                        pdf.addImage(tempImgData, 'PNG', margin, margin, imgWidth, tempImgHeight);
+                    }
+                }
+                
+                // Descargar el PDF con nombre descriptivo
+                const today = new Date();
+                const dateStr = today.toISOString().split('T')[0];
+                pdf.save(`CV_Brayan_Rodriguez_${dateStr}.pdf`);
+                
+                // Restaurar botón
+                downloadBtn.innerHTML = originalHTML;
+                downloadBtn.disabled = false;
+                
+                // Mostrar mensaje de éxito
+                showNotification('¡CV descargado exitosamente en tamaño carta!', 'success');
+                
+            } catch (error) {
+                console.error('Error al generar PDF:', error);
+                
+                // Restaurar elementos en caso de error
+                const downloadBtn = document.querySelector('button[onclick="downloadPDF()"]');
+                if (downloadBtn) {
+                    downloadBtn.innerHTML = '<i class="fas fa-download"></i> Descargar PDF';
+                    downloadBtn.disabled = false;
+                }
+                
+                document.querySelector('.print-actions').style.display = 'flex';
+                
+                showNotification('Error al generar el PDF. Verifica tu conexión e intenta nuevamente.', 'error');
+            }
+        }
+        
+        // Función para mostrar notificaciones
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <span>${message}</span>
+                <button class="notification-close">×</button>
+            `;
+            
+            // Estilos para notificación
+            Object.assign(notification.style, {
+                position: 'fixed',
+                top: '20px',
+                right: '20px',
+                padding: '16px 20px',
+                borderRadius: '8px',
+                color: 'white',
+                fontWeight: '500',
+                zIndex: '10000',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                minWidth: '300px',
+                boxShadow: '0 10px 25px rgba(0, 0, 0, 0.2)',
+                transform: 'translateX(400px)',
+                transition: 'transform 0.3s ease',
+                fontFamily: 'Inter, sans-serif'
+            });
+            
+            // Colores según tipo
+            const colors = {
+                success: '#10b981',
+                error: '#ef4444',
+                warning: '#f59e0b',
+                info: '#3b82f6'
+            };
+            notification.style.background = colors[type] || colors.info;
+            
+            document.body.appendChild(notification);
+            
+            // Animar entrada
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Botón cerrar
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.style.cssText = `
+                background: none;
+                border: none;
+                color: white;
+                font-size: 20px;
+                cursor: pointer;
+                padding: 0;
+                margin-left: auto;
+            `;
+            
+            function closeNotification() {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }
+            
+            closeBtn.addEventListener('click', closeNotification);
+            
+            // Auto cerrar después de 5 segundos
+            setTimeout(closeNotification, 5000);
+        }
+        
+        // Funcionalidad adicional para mejorar la experiencia
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scroll para navegación interna si es necesario
+            const links = document.querySelectorAll('a[href^="#"]');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Efecto de hover en las tarjetas de proyectos
+            const projectCards = document.querySelectorAll('.project-card');
+            projectCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+        
+        // Función para imprimir optimizada
+        function printCV() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

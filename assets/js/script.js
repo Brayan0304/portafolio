@@ -595,3 +595,57 @@ console.log(`
 'color: #667eea; font-size: 11px;',
 'color: #f093fb; font-size: 14px; font-weight: bold;'
 );
+
+// ===============================================
+// EmailJS Configuration
+// ===============================================
+
+// Manejar envío del formulario con Formspree (servicio gratuito)
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const submitBtn = document.getElementById('submit-btn');
+        const formMessages = document.getElementById('form-messages');
+        const originalText = submitBtn.innerHTML;
+        
+        // Mostrar loading
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+        submitBtn.disabled = true;
+        
+        // Obtener datos del formulario
+        const formData = new FormData(this);
+        
+        // Enviar a Formspree (servicio gratuito que no requiere configuración)
+        fetch('https://formspree.io/f/xpwaqjdg', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                // Éxito
+                formMessages.innerHTML = '<div class="success-message"><i class="fas fa-check-circle"></i> ¡Mensaje enviado exitosamente! Te contactaré pronto.</div>';
+                contactForm.reset();
+            } else {
+                throw new Error('Error en el envío');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            formMessages.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Error al enviar el mensaje. Por favor, intenta de nuevo o contacta directamente por email: riverosb34@gmail.com</div>';
+        })
+        .finally(() => {
+            // Restaurar botón
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+            
+            // Ocultar mensaje después de 5 segundos
+            setTimeout(() => {
+                formMessages.innerHTML = '';
+            }, 5000);
+        });
+    });
+}

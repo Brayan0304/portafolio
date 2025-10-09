@@ -160,6 +160,18 @@
   color: #a0aec0;
 }
 
+[data-theme="dark"] .success-message {
+  background-color: #2d7d32;
+  color: #c8e6c9;
+  border-color: #388e3c;
+}
+
+[data-theme="dark"] .error-message {
+  background-color: #c62828;
+  color: #ffcdd2;
+  border-color: #d32f2f;
+}
+
 /* Iconos de tecnologías en tema oscuro - Colores sólidos */
 [data-theme="dark"] .tech-item i {
   background: none;
@@ -1316,6 +1328,37 @@ button {
 .form-group textarea {
   resize: vertical;
   min-height: 120px;
+}
+
+.form-messages {
+  margin-top: var(--spacing-lg);
+}
+
+.success-message,
+.error-message {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  font-weight: var(--font-weight-medium);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.success-message i,
+.error-message i {
+  font-size: 1.1rem;
 }
 
 /* ===============================================
