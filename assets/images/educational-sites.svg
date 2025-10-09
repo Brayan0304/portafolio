@@ -1,0 +1,24 @@
+<svg width="400" height="250" viewBox="0 0 400 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" style="stop-color:#4285f4;stop-opacity:1" />
+<stop offset="50%" style="stop-color:#34a853;stop-opacity:1" />
+<stop offset="100%" style="stop-color:#ea4335;stop-opacity:1" />
+</linearGradient>
+</defs>
+<rect width="400" height="250" fill="url(#grad3)"/>
+<rect x="20" y="20" width="360" height="210" rx="10" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+<rect x="40" y="40" width="320" height="40" rx="8" fill="rgba(255,255,255,0.9)"/>
+<circle cx="70" cy="60" r="8" fill="#4285f4"/>
+<text x="90" y="65" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333">Colegio San José</text>
+<rect x="40" y="100" width="150" height="120" rx="8" fill="rgba(255,255,255,0.2)"/>
+<rect x="60" y="120" width="110" height="8" rx="4" fill="rgba(255,255,255,0.8)"/>
+<rect x="60" y="140" width="90" height="8" rx="4" fill="rgba(255,255,255,0.6)"/>
+<rect x="60" y="160" width="110" height="8" rx="4" fill="rgba(255,255,255,0.8)"/>
+<rect x="60" y="180" width="80" height="8" rx="4" fill="rgba(255,255,255,0.6)"/>
+<rect x="210" y="100" width="150" height="120" rx="8" fill="rgba(255,255,255,0.2)"/>
+<circle cx="285" cy="140" r="20" fill="#ea4335"/>
+<text x="285" y="146" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">EDU</text>
+<text x="285" y="170" font-family="Arial, sans-serif" font-size="10" fill="rgba(255,255,255,0.8)" text-anchor="middle">Plataforma</text>
+<text x="285" y="185" font-family="Arial, sans-serif" font-size="10" fill="rgba(255,255,255,0.8)" text-anchor="middle">Educativa</text>
+</svg>
