@@ -160,6 +160,80 @@
   color: #a0aec0;
 }
 
+/* Iconos de tecnologías en tema oscuro - Colores sólidos */
+[data-theme="dark"] .tech-item i {
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  background-clip: unset;
+  color: #667eea;
+}
+
+/* Colores específicos para cada tecnología en tema oscuro */
+[data-theme="dark"] .tech-item[data-tech="html5"] i {
+  color: #e34c26;
+}
+
+[data-theme="dark"] .tech-item[data-tech="css3"] i {
+  color: #1572b6;
+}
+
+[data-theme="dark"] .tech-item[data-tech="javascript"] i {
+  color: #f7df1e;
+}
+
+[data-theme="dark"] .tech-item[data-tech="typescript"] i {
+  color: #3178c6;
+}
+
+[data-theme="dark"] .tech-item[data-tech="react"] i {
+  color: #61dafb;
+}
+
+[data-theme="dark"] .tech-item[data-tech="php"] i {
+  color: #777bb4;
+}
+
+[data-theme="dark"] .tech-item[data-tech="laravel"] i {
+  color: #ff2d20;
+}
+
+[data-theme="dark"] .tech-item[data-tech="mysql"] i {
+  color: #00618a;
+}
+
+[data-theme="dark"] .tech-item[data-tech="postgresql"] i {
+  color: #336791;
+}
+
+[data-theme="dark"] .tech-item[data-tech="mariadb"] i {
+  color: #003545;
+}
+
+[data-theme="dark"] .tech-item[data-tech="azure"] i {
+  color: #0078d4;
+}
+
+[data-theme="dark"] .tech-item[data-tech="github"] i {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .tech-item[data-tech="gitlab"] i {
+  color: #fc6d26;
+}
+
+[data-theme="dark"] .tech-item[data-tech="cloudflare"] i {
+  color: #f38020;
+}
+
+[data-theme="dark"] .tech-item[data-tech="wix"] i {
+  color: #0c6ebd;
+}
+
+[data-theme="dark"] .tech-item[data-tech="google-sites"] i {
+  color: #4285f4;
+}
+
 /* Mejoras para Hero Section en tema oscuro */
 [data-theme="dark"] .hero {
   background: 
@@ -206,6 +280,46 @@
 
 [data-theme="dark"] .wheel {
   background: #e2e8f0;
+}
+
+/* Mejorar visibilidad de títulos de sección en tema oscuro */
+[data-theme="dark"] .section-title {
+  background: linear-gradient(135deg, #81c784 0%, #4fc3f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+}
+
+/* Mejorar estadísticas en tema oscuro */
+[data-theme="dark"] .stat-number {
+  background: linear-gradient(135deg, #81c784 0%, #4fc3f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Mejorar elementos flotantes en hero */
+[data-theme="dark"] .floating-element i {
+  color: #81c784;
+}
+
+/* Mejorar tech tags en proyectos */
+[data-theme="dark"] .tech-tag {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-weight: 600;
+}
+
+/* Mejorar botones en tema oscuro */
+[data-theme="dark"] .btn-secondary {
+  border-color: #81c784;
+  color: #81c784;
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+  background: #81c784;
+  color: #1a202c;
 }
 
 /* Reset CSS */
