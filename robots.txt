@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://brayan0304.github.io/portafolio/sitemap.xml
+
+# Disallow specific paths
+Disallow: /assets/
+Disallow: /*.pdf$
+
+# Allow important directories
+Allow: /assets/css/
+Allow: /assets/js/
+Allow: /assets/images/

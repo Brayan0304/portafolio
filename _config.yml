@@ -1,0 +1,55 @@
+# GitHub Pages Configuration
+title: "Brayan - Desarrollador Web Full Stack"
+description: "Portafolio profesional de desarrollador web especializado en PHP, Laravel, React y TypeScript. Experiencia en desarrollo full stack y optimización de aplicaciones web."
+author: "Brayan"
+email: "brayan@example.com"
+baseurl: "/portafolio"
+url: "https://brayan0304.github.io"
+
+# SEO Configuration
+lang: es
+locale: es_ES
+
+# Social Media
+social:
+  github: "Brayan0304"
+  linkedin: "brayan"
+  email: "brayan@example.com"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+
+# Exclude from processing
+exclude:
+  - README.md
+  - .gitignore
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+
+# Include in processing
+include:
+  - _pages
+  - assets
+
+# Plugins
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Collections
+collections:
+  projects:
+    output: false
+
+# Default settings
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+      author: "Brayan"
