@@ -37,14 +37,14 @@
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             display: grid;
-            grid-template-columns: 350px 1fr;
+            grid-template-columns: 300px 1fr;
         }
 
         /* Panel izquierdo */
         .left-panel {
             background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
             color: white;
-            padding: 40px 30px;
+            padding: 25px 20px;
             position: relative;
         }
 
@@ -61,21 +61,21 @@
 
         .profile-section {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 25px;
         }
 
         .profile-image {
-            width: 150px;
-            height: 150px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             background: linear-gradient(45deg, #667eea, #764ba2);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 20px auto;
-            font-size: 60px;
+            margin: 0 auto 15px auto;
+            font-size: 50px;
             color: white;
-            border: 5px solid rgba(255, 255, 255, 0.2);
+            border: 4px solid rgba(255, 255, 255, 0.2);
         }
 
         .profile-name {
@@ -95,7 +95,7 @@
         }
 
         .section {
-            margin-bottom: 35px;
+            margin-bottom: 15px;
         }
 
         .section-title {
@@ -145,12 +145,12 @@
 
         /* Panel derecho */
         .right-panel {
-            padding: 40px;
+            padding: 25px 30px;
             background: white;
         }
 
         .about-section {
-            margin-bottom: 35px;
+            margin-bottom: 15px;
         }
 
         .about-title {
@@ -174,7 +174,7 @@
         }
 
         .main-section {
-            margin-bottom: 30px;
+            margin-bottom: 15px;
         }
 
         .main-section-title {
@@ -194,11 +194,11 @@
         }
 
         .item {
-            margin-bottom: 25px;
-            padding: 20px;
+            margin-bottom: 10px;
+            padding: 10px;
             background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 4px solid #667eea;
+            border-radius: 6px;
+            border-left: 3px solid #667eea;
         }
 
         .item-header {
@@ -268,8 +268,8 @@
 
         .print-actions {
             text-align: center;
-            margin: 30px 0;
-            grid-column: 1 / -1;
+            margin: 20px 0;
+            padding: 20px 0;
         }
 
         .btn {
@@ -316,8 +316,13 @@
             }
         }
 
-        /* Estilos para impresión */
+        /* Estilos para impresión tamaño carta */
         @media print {
+            @page {
+                size: letter;
+                margin: 0.5in;
+            }
+            
             body {
                 background: white !important;
                 padding: 0 !important;
@@ -333,8 +338,8 @@
                 max-width: none !important;
                 margin: 0 !important;
                 border-radius: 0 !important;
-                grid-template-columns: 350px 1fr !important;
-                min-height: 100vh;
+                grid-template-columns: 300px 1fr !important;
+                height: 10in; /* Altura tamaño carta menos márgenes */
             }
             
             .left-panel, .right-panel {
@@ -358,6 +363,15 @@
         .pdf-optimized {
             box-shadow: none !important;
             border-radius: 0 !important;
+            overflow: visible !important;
+            height: auto !important;
+            min-height: auto !important;
+        }
+        
+        .pdf-optimized .left-panel,
+        .pdf-optimized .right-panel {
+            height: auto !important;
+            min-height: auto !important;
         }
     </style>
 </head>
@@ -375,10 +389,7 @@
 
             <!-- Contacto -->
             <div class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-address-book"></i>
-                    Contacto
-                </h2>
+                <h2 class="section-title">Contacto</h2>
                 <div class="contact-item">
                     <i class="fas fa-envelope"></i>
                     <a href="mailto:riverosb34@gmail.com">riverosb34@gmail.com</a>
@@ -401,27 +412,11 @@
                 </div>
             </div>
 
-            <!-- Logros y Estadísticas -->
-            <div class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-trophy"></i>
-                    Logros Destacados
-                </h2>
-                <div style="color: #bdc3c7; font-size: 14px; line-height: 1.8;">
-                    <div style="margin-bottom: 8px;">✅ +2 años de experiencia</div>
-                    <div style="margin-bottom: 8px;">✅ +15 proyectos completados</div>
-                    <div style="margin-bottom: 8px;">✅ +10 instituciones educativas</div>
-                    <div style="margin-bottom: 8px;">✅ Sistemas empresariales en producción</div>
-                    <div style="margin-bottom: 8px;">✅ Reportes PDF optimizados</div>
-                </div>
-            </div>
+
 
             <!-- Habilidades Técnicas -->
             <div class="section">
-                <h2 class="section-title">
-                    <i class="fas fa-cogs"></i>
-                    Tecnologías
-                </h2>
+                <h2 class="section-title">Tecnologías</h2>
                 <div class="skills-grid">
                     <div class="skill-item">
                         <i class="fab fa-php"></i>
@@ -455,14 +450,9 @@
         <div class="right-panel">
             <!-- Sobre Mí -->
             <div class="about-section">
-                <h2 class="about-title">
-                    <i class="fas fa-user-circle"></i>
-                    Sobre Mí
-                </h2>
+                <h2 class="about-title">Sobre Mí</h2>
                 <p class="about-text">
-                    Desarrollador web full stack con +2 años de experiencia en PHP, Laravel, React y TypeScript. 
-                    Especializado en desarrollo de sistemas de gestión, generación de reportes y sitios web educativos. 
-                    Comprometido con la entrega de soluciones de alta calidad.
+                    Desarrollador full stack con 2 años de experiencia en PHP, Laravel, React y TypeScript.
                 </p>
             </div>
 
@@ -470,10 +460,7 @@
 
             <!-- Experiencia -->
             <div class="main-section">
-                <h2 class="main-section-title">
-                    <i class="fas fa-briefcase"></i>
-                    Experiencia
-                </h2>
+                <h2 class="main-section-title">Experiencia</h2>
                 
                 <div class="item">
                     <div class="item-header">
@@ -481,84 +468,28 @@
                         <div class="item-company">Pegasus Software</div>
                         <span class="item-period">2024 - Presente</span>
                     </div>
-                    <div class="item-description">
-                        Desarrollo y mantenimiento de aplicaciones web utilizando JavaScript, PHP, HTML y CSS. 
-                        Especialización en optimización de reportes PHP con librería TCPDF.
-                    </div>
                 </div>
 
                 <div class="item">
                     <div class="item-header">
-                        <div class="item-title">Desarrollador de Sitios Web Educativos</div>
-                        <div class="item-company">Freelance</div>
+                        <div class="item-title">Desarrollador Freelance</div>
+                        <div class="item-company">Sitios Web Educativos</div>
                         <span class="item-period">2024 - Presente</span>
                     </div>
-                    <div class="item-description">
-                        Desarrollo de páginas web para instituciones educativas utilizando Google Sites y Wix, 
-                        con configuración de servicios de Cloudflare y correos institucionales.
-                    </div>
                 </div>
 
                 <div class="item">
                     <div class="item-header">
-                        <div class="item-title">Desarrollador de Reportes</div>
-                        <div class="item-company">Castilla Costerm</div>
-                        <span class="item-period">Presente</span>
-                    </div>
-                    <div class="item-description">
-                        Desarrollo especializado en la generación de reportes del sistema utilizando 
-                        controladores PHP y la librería TCPDF para documentos PDF.
-                    </div>
-                </div>
-            </div>
-
-            <!-- Proyectos Destacados -->
-            <div class="main-section">
-                <h2 class="main-section-title">
-                    <i class="fas fa-code"></i>
-                    Proyectos Destacados
-                </h2>
-                
-                <div class="item">
-                    <div class="item-header">
-                        <div class="item-title">SGA Gestión</div>
-                        <div class="item-company">Sistema de Gestión Empresarial</div>
-                    </div>
-                    <div class="item-description">
-                        Sistema completo de gestión de empleados y documentación empresarial con 
-                        arquitectura separada: Frontend en React + TypeScript y Backend en Laravel + PHP.
-                    </div>
-                </div>
-
-                <div class="item">
-                    <div class="item-header">
-                        <div class="item-title">Sistema de Reportes - Castilla Costerm</div>
-                        <div class="item-company">Generación de Reportes PDF</div>
-                    </div>
-                    <div class="item-description">
-                        Desarrollo de sistema de generación de reportes utilizando controladores 
-                        PHP y la librería TCPDF para generar documentos PDF personalizados.
-                    </div>
-                </div>
-
-                <div class="item">
-                    <div class="item-header">
-                        <div class="item-title">Sitios Web para Colegios</div>
-                        <div class="item-company">Desarrollo Web Educativo</div>
-                    </div>
-                    <div class="item-description">
-                        Desarrollo de páginas web institucionales para centros educativos 
-                        usando Google Sites y Wix, con integración de Cloudflare.
+                        <div class="item-title">Sistema SGA</div>
+                        <div class="item-company">React + Laravel</div>
+                        <span class="item-period">2024</span>
                     </div>
                 </div>
             </div>
 
             <!-- Educación -->
             <div class="main-section">
-                <h2 class="main-section-title">
-                    <i class="fas fa-graduation-cap"></i>
-                    Educación
-                </h2>
+                <h2 class="main-section-title">Educación</h2>
                 
                 <div class="item">
                     <div class="item-header">
@@ -591,22 +522,22 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Botones de acción -->
-        <div class="print-actions">
-            <button onclick="downloadPDF()" class="btn">
-                <i class="fas fa-download"></i>
-                Descargar CV
-            </button>
-            <a href="index.html" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i>
-                Volver al Portafolio
-            </a>
-        </div>
+    <!-- Botones de acción -->
+    <div class="print-actions">
+        <button onclick="downloadPDF()" class="btn">
+            <i class="fas fa-download"></i>
+            Descargar CV
+        </button>
+        <a href="index.html" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i>
+            Volver al Portafolio
+        </a>
     </div>
 
     <script>
-        // Funcionalidad para descargar PDF optimizada
+        // Funcionalidad para descargar PDF optimizado en una página
         async function downloadPDF() {
             try {
                 const downloadBtn = event.target.closest('button');
@@ -622,61 +553,57 @@
                 const cvContainer = document.getElementById('cv-content');
                 cvContainer.classList.add('pdf-optimized');
                 
-                // Esperar renderizado
-                await new Promise(resolve => setTimeout(resolve, 300));
+                // Ajustar para que quepa en una página
+                cvContainer.style.transform = 'scale(0.75)';
+                cvContainer.style.transformOrigin = 'top center';
+                cvContainer.style.width = '133%';
+                cvContainer.style.margin = '-30px auto 0';
                 
-                // Generar canvas optimizado
+                // Scroll al inicio y esperar renderizado
+                window.scrollTo(0, 0);
+                await new Promise(resolve => setTimeout(resolve, 800));
+                
+                // Generar canvas
                 const canvas = await html2canvas(cvContainer, {
-                    scale: 1.8,
+                    scale: 1.5,
                     useCORS: true,
                     allowTaint: true,
                     backgroundColor: '#ffffff',
                     logging: false,
-                    windowWidth: 1200,
-                    windowHeight: window.innerHeight
+                    width: 900,
+                    height: 1200, // Forzar altura específica
+                    scrollX: 0,
+                    scrollY: 0
                 });
                 
-                // Crear PDF
+                // Crear PDF en tamaño carta (Letter)
                 const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF('portrait', 'mm', 'a4');
+                const pdf = new jsPDF('portrait', 'mm', 'letter');
                 
-                const pageWidth = 210;
-                const pageHeight = 297;
-                const imgWidth = pageWidth - 20; // Margen
-                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                const pageWidth = 216; // Letter width
+                const pageHeight = 279; // Letter height
+                const margin = 5;
+                const imgWidth = pageWidth - (margin * 2);
+                const imgHeight = pageHeight - (margin * 2);
                 
-                if (imgHeight > pageHeight - 20) {
-                    // Múltiples páginas
-                    const totalPages = Math.ceil(imgHeight / (pageHeight - 20));
-                    const sectionHeight = canvas.height / totalPages;
-                    
-                    for (let i = 0; i < totalPages; i++) {
-                        if (i > 0) pdf.addPage();
-                        
-                        const tempCanvas = document.createElement('canvas');
-                        tempCanvas.width = canvas.width;
-                        tempCanvas.height = sectionHeight;
-                        const tempCtx = tempCanvas.getContext('2d');
-                        
-                        tempCtx.drawImage(canvas, 0, i * sectionHeight, canvas.width, sectionHeight, 0, 0, canvas.width, sectionHeight);
-                        
-                        const sectionImgHeight = (sectionHeight * imgWidth) / canvas.width;
-                        pdf.addImage(tempCanvas.toDataURL('image/jpeg', 0.95), 'JPEG', 10, 10, imgWidth, sectionImgHeight);
-                    }
-                } else {
-                    // Una página
-                    pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', 10, 10, imgWidth, imgHeight);
-                }
-                
+                // Ajustar imagen para que quepa exactamente en la página
+                pdf.addImage(canvas.toDataURL('image/jpeg', 0.9), 'JPEG', margin, margin, imgWidth, imgHeight);
                 pdf.save('CV_Brayan_Rodriguez.pdf');
                 
             } catch (error) {
                 console.error('Error generando PDF:', error);
                 alert('Error al generar el PDF. Intenta de nuevo.');
             } finally {
+                // Restaurar estilos originales
+                const cvContainer = document.getElementById('cv-content');
+                cvContainer.style.transform = '';
+                cvContainer.style.transformOrigin = '';
+                cvContainer.style.width = '';
+                cvContainer.style.margin = '';
+                
                 // Restaurar elementos
                 document.querySelector('.print-actions').style.display = 'block';
-                document.getElementById('cv-content').classList.remove('pdf-optimized');
+                cvContainer.classList.remove('pdf-optimized');
                 
                 const downloadBtn = document.querySelector('button[onclick="downloadPDF()"]');
                 downloadBtn.innerHTML = '<i class="fas fa-download"></i> Descargar CV';
