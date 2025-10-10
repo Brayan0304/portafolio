@@ -234,41 +234,8 @@ function initializeFloatingElements() {
 }
 
 // ===============================================
-// Contact Form
+// Contact Form (Handled by Formspree)
 // ===============================================
-function initializeContactForm() {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        // Get form data
-        const formData = new FormData(contactForm);
-        const data = {
-            name: formData.get('name'),
-            email: formData.get('email'),
-            subject: formData.get('subject'),
-            message: formData.get('message')
-        };
-        
-        // Show loading state
-        const submitBtn = contactForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<span>Enviando...</span><i class="fas fa-spinner fa-spin"></i>';
-        submitBtn.disabled = true;
-        
-        // Simulate form submission (replace with actual form handling)
-        setTimeout(() => {
-            // Show success message
-            showNotification('¡Mensaje enviado exitosamente!', 'success');
-            
-            // Reset form
-            contactForm.reset();
-            
-            // Reset button
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-        }, 2000);
-    });
-}
 
 // ===============================================
 // Notification System
@@ -482,7 +449,6 @@ document.addEventListener('DOMContentLoaded', () => {
     createIntersectionObserver();
     initializeTechItems();
     initializeFloatingElements();
-    initializeContactForm();
     initializeTypingEffect();
     initializeSkillsAnimation();
     initializeProjectCards();
@@ -616,36 +582,36 @@ if (contactForm) {
         // Obtener datos del formulario
         const formData = new FormData(this);
         
-        // Enviar a Formspree (servicio gratuito que no requiere configuración)
-        fetch('https://formspree.io/f/xpwaqjdg', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                // Éxito
-                formMessages.innerHTML = '<div class="success-message"><i class="fas fa-check-circle"></i> ¡Mensaje enviado exitosamente! Te contactaré pronto.</div>';
-                contactForm.reset();
-            } else {
-                throw new Error('Error en el envío');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            formMessages.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Error al enviar el mensaje. Por favor, intenta de nuevo o contacta directamente por email: riverosb34@gmail.com</div>';
-        })
-        .finally(() => {
-            // Restaurar botón
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-            
-            // Ocultar mensaje después de 5 segundos
-            setTimeout(() => {
-                formMessages.innerHTML = '';
-            }, 5000);
-        });
+        // Crear enlace mailto como fallback confiable
+        const name = formData.get('name');
+        const email = formData.get('_replyto');
+        const subject = formData.get('_subject');
+        const message = formData.get('message');
+        
+        // Crear el enlace mailto
+        const mailtoLink = `mailto:riverosb34@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`
+Nombre: ${name}
+Email: ${email}
+Asunto: ${subject}
+
+Mensaje:
+${message}
+        `)}`;
+        
+        // Abrir el cliente de correo del usuario
+        window.location.href = mailtoLink;
+        
+        // Mostrar mensaje de éxito
+        formMessages.innerHTML = '<div class="success-message"><i class="fas fa-check-circle"></i> Se abrió tu cliente de correo. Por favor, envía el mensaje desde allí.</div>';
+        contactForm.reset();
+        
+        // Restaurar botón
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+        
+        // Ocultar mensaje después de 5 segundos
+        setTimeout(() => {
+            formMessages.innerHTML = '';
+        }, 5000);
     });
 }
