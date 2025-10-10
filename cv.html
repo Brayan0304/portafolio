@@ -37,7 +37,8 @@
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             display: grid;
-            grid-template-columns: 300px 1fr;
+            grid-template-columns: 320px 1fr;
+            min-height: 95vh;
         }
 
         /* Panel izquierdo */
@@ -150,7 +151,7 @@
         }
 
         .about-section {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .about-title {
@@ -174,7 +175,7 @@
         }
 
         .main-section {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .main-section-title {
@@ -194,10 +195,10 @@
         }
 
         .item {
-            margin-bottom: 10px;
-            padding: 10px;
+            margin-bottom: 12px;
+            padding: 12px;
             background: #f8f9fa;
-            border-radius: 6px;
+            border-radius: 8px;
             border-left: 3px solid #667eea;
         }
 
@@ -381,7 +382,7 @@
         <div class="left-panel">
             <div class="profile-section">
                 <div class="profile-image">
-                    <i class="fas fa-user"></i>
+                    <img src="assets/images/foto.jpeg" alt="Brayan Rodriguez" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
                 </div>
                 <h1 class="profile-name">Brayan<br>Rodriguez</h1>
                 <p class="profile-title">Desarrollador Web Full Stack</p>
@@ -553,27 +554,23 @@
                 const cvContainer = document.getElementById('cv-content');
                 cvContainer.classList.add('pdf-optimized');
                 
-                // Ajustar para que quepa en una página
-                cvContainer.style.transform = 'scale(0.75)';
-                cvContainer.style.transformOrigin = 'top center';
-                cvContainer.style.width = '133%';
-                cvContainer.style.margin = '-30px auto 0';
-                
                 // Scroll al inicio y esperar renderizado
                 window.scrollTo(0, 0);
-                await new Promise(resolve => setTimeout(resolve, 800));
+                await new Promise(resolve => setTimeout(resolve, 1000));
                 
-                // Generar canvas
+                // Generar canvas con toda la información
                 const canvas = await html2canvas(cvContainer, {
-                    scale: 1.5,
+                    scale: 2,
                     useCORS: true,
                     allowTaint: true,
                     backgroundColor: '#ffffff',
                     logging: false,
-                    width: 900,
-                    height: 1200, // Forzar altura específica
+                    width: cvContainer.scrollWidth,
+                    height: cvContainer.scrollHeight,
                     scrollX: 0,
-                    scrollY: 0
+                    scrollY: 0,
+                    windowWidth: cvContainer.scrollWidth,
+                    windowHeight: cvContainer.scrollHeight
                 });
                 
                 // Crear PDF en tamaño carta (Letter)
@@ -582,28 +579,33 @@
                 
                 const pageWidth = 216; // Letter width
                 const pageHeight = 279; // Letter height
-                const margin = 5;
-                const imgWidth = pageWidth - (margin * 2);
-                const imgHeight = pageHeight - (margin * 2);
+                const margin = 5; // Reducir márgenes para más espacio
+                const availableWidth = pageWidth - (margin * 2);
+                const availableHeight = pageHeight - (margin * 2);
                 
-                // Ajustar imagen para que quepa exactamente en la página
-                pdf.addImage(canvas.toDataURL('image/jpeg', 0.9), 'JPEG', margin, margin, imgWidth, imgHeight);
+                // Calcular la escala para aprovechar mejor el espacio
+                const scaleX = availableWidth / (canvas.width * 0.264583); // Convertir px a mm
+                const scaleY = availableHeight / (canvas.height * 0.264583);
+                const scale = Math.min(scaleX, scaleY) * 0.95; // Usar 95% del espacio disponible
+                
+                const imgWidth = (canvas.width * 0.264583) * scale;
+                const imgHeight = (canvas.height * 0.264583) * scale;
+                
+                // Centrar la imagen en la página
+                const x = (pageWidth - imgWidth) / 2;
+                const y = (pageHeight - imgHeight) / 2; // Centrar verticalmente también
+                
+                // Agregar imagen escalada al PDF
+                pdf.addImage(canvas.toDataURL('image/jpeg', 0.95), 'JPEG', x, y, imgWidth, imgHeight);
                 pdf.save('CV_Brayan_Rodriguez.pdf');
                 
             } catch (error) {
                 console.error('Error generando PDF:', error);
                 alert('Error al generar el PDF. Intenta de nuevo.');
             } finally {
-                // Restaurar estilos originales
-                const cvContainer = document.getElementById('cv-content');
-                cvContainer.style.transform = '';
-                cvContainer.style.transformOrigin = '';
-                cvContainer.style.width = '';
-                cvContainer.style.margin = '';
-                
                 // Restaurar elementos
                 document.querySelector('.print-actions').style.display = 'block';
-                cvContainer.classList.remove('pdf-optimized');
+                document.getElementById('cv-content').classList.remove('pdf-optimized');
                 
                 const downloadBtn = document.querySelector('button[onclick="downloadPDF()"]');
                 downloadBtn.innerHTML = '<i class="fas fa-download"></i> Descargar CV';
